@@ -101,8 +101,22 @@ const Converter = () => {
           <input
             type="number"
             min={0}
-            value={amount}
-            onChange={(e) => setAmount(Number(e.target.value))}
+            value={isNaN(amount) ? "" : amount}
+            onChange={(e) => {
+              
+                       let value = e.target.value;
+
+                       // Allow clearing input
+                      if (value === "") {
+                      setAmount(NaN);
+                      return;
+                      }
+
+                      // Remove leading zeros (e.g., 05 → 5)
+                      value = value.replace(/^0+(?=\d)/, "");
+
+                         setAmount(Number(value));
+                        }}
             className="w-full rounded-xl bg-slate-900/70 border border-slate-600/70 px-3 py-2.5 text-sm text-slate-50 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition"
             placeholder="Enter amount, e.g. 100"
           />
